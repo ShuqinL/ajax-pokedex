@@ -27,20 +27,18 @@
            return response.json();
          })
          .then(function(myJson) {     
-           let pokemons = JSON.stringify(myJson.results);
-          // console.log(pokemons);
-           console.log(pokemons[0]);
-           /* for(var i=0;i<964;i++){
-            // console.log(pokemons[i].name);
-           } */
-
-
-
-          /*  console.log(pokemons);    */
-          /* $("names").text(JSON.stringify(myJson)); */
+           let pokemons = myJson.results;
+           
+           for(var i=0;i<64;i++){
+            //console.log(pokemons[i].name);
+            let pokemonName=pokemons[i].name;
+             $("#pokedex").append("<option>pokemonName</option>");
+           } 
+ 
            
          })
-        
+
+         
          .catch(error => console.error(error));
 
            
