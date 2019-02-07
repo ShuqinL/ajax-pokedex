@@ -29,22 +29,13 @@
          .then(function(myJson) {     
            let pokemons = myJson.results;
            
-           for(var i=0;i<64;i++){
+           for(var i = 0; i < 64; i++) {
             //console.log(pokemons[i].name);
             let pokemonName=pokemons[i].name;
-             $("#pokedex").append("<option>pokemonName</option>");
+             $("#pokedex").append("<option>" + pokemonName + "</option>");
            } 
- 
-           
          })
-
-         
          .catch(error => console.error(error));
-
-           
-  
- 
-    
     </script>   
     </body>
 </html>
