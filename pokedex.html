@@ -16,12 +16,12 @@
     <h3 >Pokedex</h3>
     <select id="pokedex">
     <option value="">Select a Pokemon:</option>
-  </select>
-    
-   
-    
-
+  </select> </br></br>    
+  <div id="pokeId"></div>
+  <div id="photo"></div>
+  <div id="moves"></div>
      <script>
+   
          fetch('https://pokeapi.co/api/v2/pokemon/?limit=964')
          .then(function(response) {
            return response.json();
@@ -31,11 +31,44 @@
            
            for(var i = 0; i < 64; i++) {
             //console.log(pokemons[i].name);
-            let pokemonName=pokemons[i].name;
-             $("#pokedex").append("<option>" + pokemonName + "</option>");
+            let pokemonName = pokemons[i].name;
+            let url = pokemons[i].url;
+             $("#pokedex").append("<option value=\""+url+"\">" + pokemonName + "</option>");
            } 
          })
          .catch(error => console.error(error));
+
+
+         $("#pokedex").change(function(e) {
+        var value = $(this).val();
+         /*  $("#link").text(value); */
+        fetch(value)
+        .then(function(response) {
+           return response.json();
+         })
+         .then(function(myJson) {  
+           //display id
+          let ids = myJson.id;
+          $("#pokeId").text(ids);
+        
+          let moves = myJson.moves;
+          //console.log(moves[0],moves[1],moves[2],moves[3])
+          //$("#moves").html(moves[0]+moves[1]+moves[2]+moves[3]);
+          for(let i=0; i<4; i++){
+            move = moves[i];
+           let moveName = move.move.name;
+           console.log(move);
+           $("#moves").append(moveName + "<br/>");
+          }
+         
+         })
+       });
+
+
+
+
+
+
     </script>   
     </body>
 </html>
