@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<!-- 	<link href="style.css" rel="stylesheet" type="text/css" /> -->
+		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <style>
+
+    </style>
+		<title>AJAX-Pokedex</title>
+	</head>
+	<body>
+
+    <h3 >Pokedex</h3>
+    <select id="pokedex">
+    <option value="">Select a Pokemon:</option>
+  </select>
+    
+   
+    
+
+     <script>
+         fetch('https://pokeapi.co/api/v2/pokemon/?limit=964')
+         .then(function(response) {
+           return response.json();
+         })
+         .then(function(myJson) {     
+           let pokemons = JSON.stringify(myJson.results);
+          // console.log(pokemons);
+           console.log(pokemons[0]);
+           /* for(var i=0;i<964;i++){
+            // console.log(pokemons[i].name);
+           } */
+
+
+
+          /*  console.log(pokemons);    */
+          /* $("names").text(JSON.stringify(myJson)); */
+           
+         })
+        
+         .catch(error => console.error(error));
+
+           
+  
+ 
+    
+    </script>   
+    </body>
+</html>
