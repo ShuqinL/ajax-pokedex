@@ -13,39 +13,76 @@
 	</head>
 	<body>
 
-    <h3 >Pokedex</h3>
-    <select id="pokedex">
-    <option value="">Select a Pokemon:</option>
+      <h3 >Pokedex</h3>
+      <select id="pokedex">
+      <option value="">Select a Pokemon:</option>
+    </select> </br></br>    
+    <div id="pokeId"></div>
+    <div id="image"></div>
+    <div id="moves"></div>
+
   </select>
     
-   
-    
-
      <script>
-         fetch('https://pokeapi.co/api/v2/pokemon/?limit=964')
+
+      fetch('https://pokeapi.co/api/v2/pokemon/?limit=964')
          .then(function(response) {
            return response.json();
          })
          .then(function(myJson) {     
-           let pokemons = JSON.stringify(myJson.results);
-          // console.log(pokemons);
-           console.log(pokemons[0]);
-           /* for(var i=0;i<964;i++){
-            // console.log(pokemons[i].name);
-           } */
-
-
-
-          /*  console.log(pokemons);    */
-          /* $("names").text(JSON.stringify(myJson)); */
+           let pokemons = myJson.results;
            
+           for(var i = 0; i < 64; i++) {
+            //console.log(pokemons[i].name);
+            let pokemonName = pokemons[i].name;
+            let url = pokemons[i].url;
+             $("#pokedex").append("<option value=\""+url+"\">" + pokemonName + "</option>");
+           } 
          })
-        
          .catch(error => console.error(error));
 
+
+      $("#pokedex").change(function(e) {
+        var value = $(this).val();
+        fetch(value)
+        .then(function(response) {
+           return response.json();
+         })
+         .then(function(myJson) {  
+           //display id
+          let ids = myJson.id;
+          $("#pokeId").text(ids);
+        
+          //display moves
+          let moves = myJson.moves;
+          for(let i=0; i<moves.length; i++){
+            move = moves[i];
+           let moveName = move.move.name;
+           $("#moves").append(moveName + "<br/>");
+          }
+
+          //display image
+        
+          let image=myJson.sprites.front_default;
+          
+          fetch(image)
+          .then(function(response) {
+           return response;
+         })
+          .then(function(myJson) {  
            
+           $("#image").html("<img src=\""+myJson.url+"\"/>");
+          })
+          .catch(error => console.error(error));
+         
+
+
+         });
+
+       });
+
   
- 
+   
     
     </script>   
     </body>
