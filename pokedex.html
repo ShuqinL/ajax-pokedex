@@ -19,11 +19,15 @@
     </select> </br></br>    
     <div id="pokeId"></div>
     <div id="image"></div>
-    <div id="moves"></div>
+    <div id="moves"></div></br></br> 
+    <div id="displayEvolution"></div>
 
   </select>
     
      <script>
+      
+      let names=[];
+      let urls=[];
 
       fetch('https://pokeapi.co/api/v2/pokemon/?limit=964')
          .then(function(response) {
@@ -31,57 +35,76 @@
          })
          .then(function(myJson) {     
            let pokemons = myJson.results;
-           
-           for(var i = 0; i < 64; i++) {
-            //console.log(pokemons[i].name);
+                     
+           for(var i = 0; i < 964; i++) {
             let pokemonName = pokemons[i].name;
+            names.push(pokemonName);
             let url = pokemons[i].url;
+            urls.push(url);
              $("#pokedex").append("<option value=\""+url+"\">" + pokemonName + "</option>");
            } 
          })
          .catch(error => console.error(error));
-
-
-      $("#pokedex").change(function(e) {
-        var value = $(this).val();
-        fetch(value)
-        .then(function(response) {
-           return response.json();
-         })
-         .then(function(myJson) {  
-           //display id
-          let ids = myJson.id;
-          $("#pokeId").text(ids);
-        
-          //display moves
-          let moves = myJson.moves;
-          for(let i=0; i<moves.length; i++){
-            move = moves[i];
-           let moveName = move.move.name;
-           $("#moves").append(moveName + "<br/>");
-          }
-
-          //display image
-        
-          let image=myJson.sprites.front_default;
-          
-          fetch(image)
-          .then(function(response) {
-           return response;
-         })
-          .then(function(myJson) {  
-           
-           $("#image").html("<img src=\""+myJson.url+"\"/>");
-          })
-          .catch(error => console.error(error));
          
+          $("#pokedex").change(function(e) {
+             var value = $(this).val();      
+             fetch(value)
+             .then(function(response) {
+                return response.json();
+              })
 
+             .then(function(myJson) { 
+                //display id
+               let ids = myJson.id;
+               $("#pokeId").text(ids);  
+               //display moves
+                let moves = myJson.moves;
+                for(let i=0; i<5; i++){
+                   move = moves[i];
+                  let moveName = move.move.name;
+                  $("#moves").append(moveName + "<br/>");
+                 }
+                //display image   
+                let image=myJson.sprites.front_default;     
+                fetch(image)
+               .then(function(response) {
+                  return response;
+                 })
+               .then(function(myJson) {         
+                  $("#image").html("<img src=\""+myJson.url+"\"/>");
+                })
+               .catch(error => console.error(error));
+              
+               //display evolution chain
+               let species=myJson.species.url;
+               fetch(species)
+               .then(function(response){
+                 return response.json();
+               })
+               .then(function(data){
+                 if(data.evolves_from_species!==null){
+                   //display ancestor's name
+                  $("#displayEvolution").text(data.evolves_from_species.name);
+                  //display ancestor's image             
+                  let prevId=names.indexOf(data.evolves_from_species.name);
+                  fetch(urls[prevId]) 
+                  .then(function(response){
+                     return response.json();
+                  })
+                  .then(function(myJson){
+                    $("#displayEvolution").append("</br></br><img src=\""+myJson.sprites.front_default+"\"/>");
+                  })
+                 } else {
+                    $("#displayEvolution").text("No ancestor");
+                 }                 
+               })
+               .catch(error => console.error(error));
 
-         });
+              });
 
-       });
+           });
 
-  
+        
    
     
     </script>   
