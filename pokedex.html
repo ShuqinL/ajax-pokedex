@@ -1,26 +1,74 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<!-- 	<link href="style.css" rel="stylesheet" type="text/css" /> -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> -->
+  <!-- 	<link href="style.css" rel="stylesheet" type="text/css" /> -->
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <style>
-
+         header{
+           background-color: rgb(228, 119, 18);
+           color:white;
+           text-align: center;
+           font-family:chilanka;
+           font-size:45px;
+           font-weight:bolder;
+           padding:10px;
+         }
+         #pokedex{
+           background-color: white;
+           color: rgb(201, 106, 17);
+           font-family:chilanka;
+           font-weight:bolder;
+           font-size:20px;
+           height:30px;
+         }
+         #container{
+           margin-top:50px;
+           color:black;
+           font-family:chilanka;
+           font-weight:bolder;
+           font-size:20px;      
+           text-align:center;
+         }
+         #image img{
+           width:300px;
+           height:300px;      
+         }
+         #displayEvolution img{
+           width:180px;
+           height:180px;
+         }
     </style>
 		<title>AJAX-Pokedex</title>
 	</head>
 	<body>
-
-      <h3 >Pokedex</h3>
-      <select id="pokedex">
-      <option value="">Select a Pokemon:</option>
-    </select> </br></br>    
-    <div id="pokeId"></div>
-    <div id="image"></div>
-    <div id="moves"></div></br></br> 
-    <div id="displayEvolution"></div>
+    <header>
+        <h3 >Pokedex</h3>
+        <select id="pokedex">
+          <option value="">Select a Pokemon:</option>
+        </select> 
+    </header>
+    <div id="container" class="row">
+        <div id="left" class="col-4">
+            <div>Id:</div>
+            <div id="pokeId"></div>
+            <div id="image" ></div>
+        </div>
+        <div id="center" class="col-4">
+            <div>Moves:</div>
+            <div id="moves"></div>
+        </div>
+        <div id="right" class="col-4">
+             <div>Evolves from:</div>
+             <div id="displayEvolution"></div>
+        </div>
+  </div>
 
   </select>
     
